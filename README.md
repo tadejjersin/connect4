@@ -1,2 +1,5 @@
-# connect4
-Igra 4 v vrsto za projektno nalogo pri predmetu Uvod v programiranje.
+# Uvod
+To je igra 4 v vrsto (Connect 4), za projektno nalogo pri predmetu Uvod v programiranje na Fakulteti za matematiko in fiziko.
+
+## Navodila za uporabo
+Še sledi.
