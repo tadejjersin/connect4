@@ -15,55 +15,67 @@ def mozne_nove_mreze(mreza, igralec):
             mreze_s_stolpci.append((stolpec, nova_mreza))
     return mreze_s_stolpci
 
+# def konec_igre(mreza):
+#     if mreza[0].count("0") == 0: # če je prva vrstica polna je cela mreža polna
+#         return (True, None)
+#     for vrstica in range(6): # mreža je 6 x 7
+#             for stolpec in range(7):
+#                 if vrstica < 3:
+#                     if ali_vsebuje_barvo(mreza, vrstica, stolpec) and preveri_stolpec(mreza, vrstica, stolpec, 4):
+#                         return (True, None)
+#                     if stolpec < 4:
+#                         if ali_vsebuje_barvo(mreza, vrstica, stolpec) and preveri_diagonalo1(mreza, vrstica, stolpec, 4):
+#                             return (True, None)
+#                 if stolpec < 4:
+#                     if ali_vsebuje_barvo(mreza, vrstica, stolpec) and preveri_vrstico(mreza, vrstica, stolpec, 4):
+#                         return (True, None)
+#                     if vrstica >= 3:
+#                         if ali_vsebuje_barvo(mreza, vrstica, stolpec) and preveri_diagonalo2(mreza, vrstica, stolpec, 4):
+#                             return (True, None)
+#     return (False, None)
+
+# def ali_vsebuje_barvo(mreza, vrstica, stolpec):
+#     return mreza[vrstica][stolpec] != "0"
+
+# def preveri_vrstico(mreza, vrstica, stolpec, n):
+#     barva = mreza[vrstica][stolpec]
+#     for i in range(1, n):
+#         if mreza[vrstica][stolpec + i] != barva:
+#             return False
+#     return True
+
+# def preveri_stolpec(mreza, vrstica, stolpec, n):
+#     barva = mreza[vrstica][stolpec]
+#     for i in range(1, n):
+#         if mreza[vrstica + i][stolpec] != barva:
+#             return False
+#     return True
+
+# def preveri_diagonalo1(mreza, vrstica, stolpec, n):
+#     barva = mreza[vrstica][stolpec]
+#     for i in range(1, n):
+#         if mreza[vrstica + i][stolpec + i] != barva:
+#             return False
+#     return True
+
+# def preveri_diagonalo2(mreza, vrstica, stolpec, n):
+#     barva = mreza[vrstica][stolpec]
+#     for i in range(1, n):
+#         if mreza[vrstica - i][stolpec + i] != barva:
+#             return False
+#     return True
+
 def konec_igre(mreza):
     if mreza[0].count("0") == 0: # če je prva vrstica polna je cela mreža polna
-        return True
-    for vrstica in range(6): # mreža je 6 x 7
-            for stolpec in range(7):
-                if vrstica < 3:
-                    if ali_vsebuje_barvo(mreza, vrstica, stolpec) and preveri_stolpec(mreza, vrstica, stolpec, 4):
-                        return True
-                    if stolpec < 4:
-                        if ali_vsebuje_barvo(mreza, vrstica, stolpec) and preveri_diagonalo1(mreza, vrstica, stolpec, 4):
-                            return True
-                if stolpec < 4:
-                    if ali_vsebuje_barvo(mreza, vrstica, stolpec) and preveri_vrstico(mreza, vrstica, stolpec, 4):
-                        return True
-                    if vrstica >= 3:
-                        if ali_vsebuje_barvo(mreza, vrstica, stolpec) and preveri_diagonalo2(mreza, vrstica, stolpec, 4):
-                            return True
-    return False
-
-def ali_vsebuje_barvo(mreza, vrstica, stolpec):
-    return mreza[vrstica][stolpec] != "0"
-
-def preveri_vrstico(mreza, vrstica, stolpec, n):
-    barva = mreza[vrstica][stolpec]
-    for i in range(1, n):
-        if mreza[vrstica][stolpec + i] != barva:
-            return False
-    return True
-
-def preveri_stolpec(mreza, vrstica, stolpec, n):
-    barva = mreza[vrstica][stolpec]
-    for i in range(1, n):
-        if mreza[vrstica + i][stolpec] != barva:
-            return False
-    return True
-
-def preveri_diagonalo1(mreza, vrstica, stolpec, n):
-    barva = mreza[vrstica][stolpec]
-    for i in range(1, n):
-        if mreza[vrstica + i][stolpec + i] != barva:
-            return False
-    return True
-
-def preveri_diagonalo2(mreza, vrstica, stolpec, n):
-    barva = mreza[vrstica][stolpec]
-    for i in range(1, n):
-        if mreza[vrstica - i][stolpec + i] != barva:
-            return False
-    return True
+         return (True, None)
+    kombinacije = mozne_kombinacije(mreza)
+    for kombinacija in kombinacije:
+        if kombinacija == "RRRR":
+            return (True, "R")
+        elif kombinacija == "MMMM":
+            return (True, "M")
+    else:
+        return (False, None)
 
 def vrednost_mreze(mreza):
     vrednost = 0
@@ -126,7 +138,7 @@ def doloci_vrednost_kombinacije(kombinacija: str):
         
 # minimax algoritem
 def minimax(mreza, globina, alpha, beta, igralec): # računalnik hoče čim manjši rezultat, igralec pa čim večjega
-    if globina == 0 or konec_igre(mreza): 
+    if globina == 0 or konec_igre(mreza)[0]: 
         return (vrednost_mreze(mreza), None)
 
     if igralec:
