@@ -1,3 +1,5 @@
+import ai_nasprotnik
+
 class Polje():
     def __init__(self):
         self.seznam_potez = []
@@ -30,18 +32,13 @@ class Polje():
             return 
 
     def preveri_zmago(self):
-        zmagovalec = None
+        konec, zmagovalec = ai_nasprotnik.konec_igre(self.mreza)
+        if konec:
+            print(f"Zmagal je igralec z barvo: {zmagovalec}")
+            return True
+        else:
+            return False
         
-        for vrstica in range(6): # treba še napisat pomožne funkcije
-            for stolpec in range(7):
-                if vrstica < 3:
-                    preveri_stolpec(self.mreza, vrstica, stolpec)
-                    if stolpec < 4:
-                        preveri_diagonalo1(self.mreza, vrstica, stolpec)
-                if stolpec < 4:
-                    preveri_vrstico(self.mreza, vrstica, stolpec)
-                    if vrstica >= 3:
-                        preveri_diagonalo2(self.mreza, vrstica, stolpec)
 
 
 class Stanje():
