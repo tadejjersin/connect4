@@ -1,0 +1,47 @@
+body {
+    background-color: #261C2C;
+}
+
+h1 {
+    text-align: center;
+    color: #6E85B2;
+    font-size: 80px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+#odjavagumb {
+    float: right;
+}
+
+.split {
+    height: 100%;
+    width: 30%;
+    position: fixed;
+}
+.left {
+    left: 0;
+}
+.right {
+
+    right: 0;
+}
+.middle {
+    left: 30%;
+    height: 100%;
+    width: 40%;
+    position: fixed;
+}
+.gumbi {
+    background-color: #5C527F;
+    text-align: center;
+    padding: 1em;
+    margin-left: 2em;
+    margin-right: 2em;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    box-shadow: 5px 10px #3E2C41;
+}
