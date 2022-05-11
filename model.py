@@ -44,10 +44,14 @@ class Polje():
 class Stanje():
     def __init__(self):
         self.trenutno_polje = None
+        self.trenutna_tema = 0
+
     
     def novo_polje(self):
         self.trenutno_polje = Polje()
-                
-        
 
+    def zamenjaj_temo(self):
+        self.trenutna_tema = (self.trenutna_tema + 1) % 2
+
+        
         

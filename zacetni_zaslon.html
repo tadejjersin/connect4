@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>naslov</title>
+        <link href="/static/style.css" rel="stylesheet">
+        % if tema == 0:
+        <link href="/static/barve0.css" rel="stylesheet">
+        % else:
+        <link href="/static/barve1.css" rel="stylesheet">
+        % end
+    </head>
+    <body>
+        <div class="split left">
+            <form action="/zamenjaj_temo/" method="POST">
+                <button>Tema</button>
+            </form>
+            <button>?</button>
+        </div>
+        <div class="middle">
+            <h1>4 V VRSTO</h1>
+            <a href="/igra1">
+                <div class="gumbi">
+                    <h2>Igra za dva igralca</h2>
+                </div>
+            </a>
+            <a href="/igra2">
+                <div class="gumbi">
+                    <h2>Igraj proti računalniku</h2>
+                </div>
+            </a>
+            <a href="/statistika">
+                <div class="gumbi">
+                    <h2>Statistika</h2>
+                </div>
+            </a>
+        </div>
+        <div class="split right">
+            <button id="odjavagumb">Odjavi se</button>
+        </div>
+
+    </body>
+</html>
