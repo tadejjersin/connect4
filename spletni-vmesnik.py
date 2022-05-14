@@ -19,8 +19,19 @@ def zamenjaj_temo():
     stanje.zamenjaj_temo()
     bottle.redirect("/")
 
-@bottle.get("/igra1")
-def igra():
-    return "<p>namaanam</p>"
+@bottle.get("/igra_za_dva")
+def igra1():
+    return bottle.template(
+        "igra_za_dva.html",
+        na_vrsti = stanje.trenutno_polje_za_2.na_vrsti,
+        mreza = stanje.trenutno_polje_za_2.mreza
+    )
+
+@bottle.post("/vrzi_v_prvi_stolpec/")
+def vrzi_v_prvi_stolpec():
+    st = 0
+    igralec = stanje.trenutno_polje_za_2.na_vrsti
+    stanje.trenutno_polje_za_2.dodaj_potezo(igralec, st)
+    bottle.redirect("/igra_za_dva")
 
 bottle.run(reloader=True, debug=True)
