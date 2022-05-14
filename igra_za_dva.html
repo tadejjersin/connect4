@@ -39,7 +39,17 @@
                 </tr>
                 % end
             </table>
+            % if konec:
+            <h2>KONEC</h2>
+            % end
         </div>
-        <div class="split right"></div>
+        <div class="split right">
+            <form action="/nova_igra/" method="POST">
+                <button>NOVA IGRA</button>
+            </form>
+            <form action="/nazaj_na_zacetno_stran/" method="POST">
+                <button>NAZAJ NA ZAČETNO STRAN</button>
+            </form>
+        </div>
     </body>
 </html>
