@@ -15,13 +15,13 @@
         <div class="middle">
             <h2>Na vrsti je {{ na_vrsti }}</h2>
             <div class="stolpci">
-            <form action="/vrzi_v_prvi_stolpec/"  method="POST"><button style="width: 49px;">1</button></form>
-            <form action="/vrzi_v_drugi_stolpec/"  method="POST"><button style="width:49px;">2</button></form>
-            <form action="/vrzi_v_tretji_stolpec/"  method="POST"><button style="width: 49px;">3</button></form>
-            <form action="/vrzi_v_cetrti_stolpec/"  method="POST"><button style="width: 49px;">4</button></form>
-            <form action="/vrzi_v_peti_stolpec/"  method="POST"><button style="width: 49px;">5</button></form>
-            <form action="/vrzi_v_sesti_stolpec/"  method="POST"><button style="width: 49px;">6</button></form>
-            <form action="/vrzi_v_sedmi_stolpec/"  method="POST"><button style="width: 49px;">7</button></form>
+            <form action="/vrzi_v_stolpec/0/"  method="POST"><button style="width: 49px;">1</button></form>
+            <form action="/vrzi_v_stolpec/1/"  method="POST"><button style="width:49px;">2</button></form>
+            <form action="/vrzi_v_stolpec/2/"  method="POST"><button style="width: 49px;">3</button></form>
+            <form action="/vrzi_v_stolpec/3/"  method="POST"><button style="width: 49px;">4</button></form>
+            <form action="/vrzi_v_stolpec/4/"  method="POST"><button style="width: 49px;">5</button></form>
+            <form action="/vrzi_v_stolpec/5/"  method="POST"><button style="width: 49px;">6</button></form>
+            <form action="/vrzi_v_stolpec/6/"  method="POST"><button style="width: 49px;">7</button></form>
             </div>
             <table>
                 % for vrstica in range(6):

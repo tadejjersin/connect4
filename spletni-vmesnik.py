@@ -27,9 +27,9 @@ def igra1():
         mreza = stanje.trenutno_polje_za_2.mreza
     )
 
-@bottle.post("/vrzi_v_prvi_stolpec/")
-def vrzi_v_prvi_stolpec():
-    st = 0
+@bottle.post("/vrzi_v_stolpec/<id_stolpca:int>/")
+def vrzi_v_prvi_stolpec(id_stolpca):
+    st = id_stolpca
     igralec = stanje.trenutno_polje_za_2.na_vrsti
     stanje.trenutno_polje_za_2.dodaj_potezo(igralec, st)
     bottle.redirect("/igra_za_dva")
