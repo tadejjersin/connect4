@@ -1,5 +1,6 @@
 import ai_nasprotnik
 import random
+import math
 
 class Polje():
     def __init__(self):
@@ -36,6 +37,9 @@ class Polje():
                 self.na_vrsti = "igralec1"
         else:
             return 
+
+    def idealni_stolpec(self, globina, igralec=False):
+        return ai_nasprotnik.minimax(self.mreza, globina, -math.inf, math.inf, igralec)[1]
 
     def preveri_zmago(self):
         konec, zmagovalec = ai_nasprotnik.konec_igre(self.mreza)
