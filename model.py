@@ -43,19 +43,31 @@ class Polje():
 
     def preveri_zmago(self):
         konec, zmagovalec = ai_nasprotnik.konec_igre(self.mreza)
-        if konec:
-            print(f"Zmagal je igralec z barvo: {zmagovalec}")
-            return True
+        return (konec, zmagovalec)
+        
+class Statistika():
+    def __init__(self, igrane=0, izgubljene=0, zmagane=0, neodlocene=0):
+        self.stevilo_igranih_iger = igrane
+        self.stevilo_izgubljenih_iger = izgubljene
+        self.stevilo_zmaganih_iger = zmagane
+        self.stevilo_neodlocenih_iger = neodlocene
+
+    def dodaj_igro(self, zmagovalec): # -1 poraz , 0 neodloćeno, 1 zmaga
+        self.stevilo_igranih_iger += 1
+        if zmagovalec == "R":
+            self.stevilo_zmaganih_iger += 1
+        elif zmagovalec == "M":
+            self.stevilo_izgubljenih_iger += 1
         else:
-            return False
+            self.stevilo_neodlocenih_iger += 1
         
 
-
 class Stanje():
-    def __init__(self):
+    def __init__(self, igrane=0, izgubljene=0, zmagane=0, neodlocene=0):
         self.trenutno_polje_za_2 = Polje()
         self.trenutno_polje_za_1 = Polje()
         self.trenutna_tema = 0
+        self.statistika = Statistika(igrane, izgubljene, zmagane, neodlocene)
 
     
     def novo_polje_za_2(self):

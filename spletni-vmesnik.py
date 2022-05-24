@@ -32,7 +32,7 @@ def igra1():
 def vrzi_v_prvi_stolpec(id_stolpca):
     st = id_stolpca
     igralec = stanje.trenutno_polje_za_2.na_vrsti
-    konec = stanje.trenutno_polje_za_2.preveri_zmago()
+    konec = stanje.trenutno_polje_za_2.preveri_zmago()[0]
     if not konec:
         stanje.trenutno_polje_za_2.dodaj_potezo(igralec, st)
     bottle.redirect("/igra_za_dva")
@@ -49,15 +49,19 @@ def nazaj_na_zacetno_stran():
 @bottle.get("/igra_za_enega")
 def igra_za_enega():
     na_vrsti = stanje.trenutno_polje_za_1.na_vrsti
-    if na_vrsti == "igralec2" and stanje.trenutno_polje_za_1.preveri_zmago() == False:
+    konec, zmagovalec = stanje.trenutno_polje_za_1.preveri_zmago()
+    if konec:
+        stanje.statistika.dodaj_igro(zmagovalec)
+    elif na_vrsti == "igralec2":
         stolpec = stanje.trenutno_polje_za_1.idealni_stolpec(5)
         stanje.trenutno_polje_za_1.dodaj_potezo("igralec2", stolpec)
     mreza = stanje.trenutno_polje_za_1.mreza
+    na_vrsti = stanje.trenutno_polje_za_1.na_vrsti
     return bottle.template(
         "igra_za_enega.html", 
-        na_vrsti = stanje.trenutno_polje_za_1.na_vrsti,
+        na_vrsti = na_vrsti,
         mreza = mreza,
-        konec = stanje.trenutno_polje_za_1.preveri_zmago()
+        konec = stanje.trenutno_polje_za_1.preveri_zmago()[0]
     )
 
 @bottle.post("/vrzi_v_stolpec2/<id_stolpca:int>/")
