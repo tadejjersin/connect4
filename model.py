@@ -60,6 +60,9 @@ class Statistika():
             self.stevilo_izgubljenih_iger += 1
         else:
             self.stevilo_neodlocenih_iger += 1
+
+    def vrni_statistiko(self):
+        return (self.stevilo_igranih_iger, self.stevilo_izgubljenih_iger, self.stevilo_zmaganih_iger, self.stevilo_neodlocenih_iger)
         
 
 class Stanje():
