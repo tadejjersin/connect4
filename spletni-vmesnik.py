@@ -55,7 +55,7 @@ def igra_za_enega():
     mreza = stanje.trenutno_polje_za_1.mreza
     return bottle.template(
         "igra_za_enega.html", 
-        na_vrsti = na_vrsti,
+        na_vrsti = stanje.trenutno_polje_za_1.na_vrsti,
         mreza = mreza,
         konec = stanje.trenutno_polje_za_1.preveri_zmago()
     )
@@ -67,6 +67,11 @@ def vrzi_v_prvi_stolpec(id_stolpca):
     konec = stanje.trenutno_polje_za_1.preveri_zmago()
     if not konec:
         stanje.trenutno_polje_za_1.dodaj_potezo("igralec1", st)
+    bottle.redirect("/igra_za_enega")
+
+@bottle.post("/nova_igra1/")
+def nova_igra():
+    stanje.novo_polje_za_1()
     bottle.redirect("/igra_za_enega")
 
 bottle.run(reloader=True, debug=True)
