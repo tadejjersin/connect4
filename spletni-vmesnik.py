@@ -47,7 +47,7 @@ def nazaj_na_zacetno_stran():
     bottle.redirect("/")
 
 @bottle.get("/igra_za_enega")
-def igra_za_enega(): # statistika se lahko prevečkrat šteje
+def igra_za_enega():
     na_vrsti = stanje.trenutno_polje_za_1.na_vrsti
     konec, zmagovalec = stanje.trenutno_polje_za_1.preveri_zmago()
     if na_vrsti == "igralec2" and not konec:
@@ -56,8 +56,10 @@ def igra_za_enega(): # statistika se lahko prevečkrat šteje
     mreza = stanje.trenutno_polje_za_1.mreza
     na_vrsti = stanje.trenutno_polje_za_1.na_vrsti
     konec, zmagovalec = stanje.trenutno_polje_za_1.preveri_zmago()
-    if konec:
-        stanje.statistika.dodaj_igro(zmagovalec)
+    koncane_igre = stanje.statistika.seznam_hashov_koncanih_iger
+    igra = hash(stanje.trenutno_polje_za_1)
+    if konec and igra not in koncane_igre:
+        stanje.statistika.dodaj_igro(zmagovalec, igra)
         
     return bottle.template(
         "igra_za_enega.html", 

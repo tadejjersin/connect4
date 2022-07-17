@@ -51,8 +51,10 @@ class Statistika():
         self.stevilo_izgubljenih_iger = izgubljene
         self.stevilo_zmaganih_iger = zmagane
         self.stevilo_neodlocenih_iger = neodlocene
+        self.seznam_hashov_koncanih_iger = set()
 
-    def dodaj_igro(self, zmagovalec): # -1 poraz , 0 neodloćeno, 1 zmaga
+    def dodaj_igro(self, zmagovalec, igra): # -1 poraz , 0 neodloćeno, 1 zmaga
+        self.seznam_hashov_koncanih_iger.add(igra)
         self.stevilo_igranih_iger += 1
         if zmagovalec == "R":
             self.stevilo_zmaganih_iger += 1
@@ -60,6 +62,7 @@ class Statistika():
             self.stevilo_izgubljenih_iger += 1
         else:
             self.stevilo_neodlocenih_iger += 1
+    
 
     def vrni_statistiko(self):
         return (self.stevilo_igranih_iger, self.stevilo_izgubljenih_iger, self.stevilo_zmaganih_iger, self.stevilo_neodlocenih_iger)
