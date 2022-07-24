@@ -1,19 +1,26 @@
 import ai_nasprotnik
 import random
 import math
+import json
 
 class Polje():
-    def __init__(self):
-        self.seznam_potez = []
-        self.mreza = [
-            ["0", "0", "0", "0", "0", "0", "0"],
-            ["0", "0", "0", "0", "0", "0", "0"],
-            ["0", "0", "0", "0", "0", "0", "0"],
-            ["0", "0", "0", "0", "0", "0", "0"],
-            ["0", "0", "0", "0", "0", "0", "0"],
-            ["0", "0", "0", "0", "0", "0", "0"],
+    def __init__(self, zaporedna_stevilka, mreza=None, na_vrsti=None):
+        self.zaporedna_stevilka = zaporedna_stevilka
+        if mreza:
+            self.mreza = mreza
+        else:
+            self.mreza = [
+                ["0", "0", "0", "0", "0", "0", "0"],
+                ["0", "0", "0", "0", "0", "0", "0"],
+                ["0", "0", "0", "0", "0", "0", "0"],
+                ["0", "0", "0", "0", "0", "0", "0"],
+                ["0", "0", "0", "0", "0", "0", "0"],
+                ["0", "0", "0", "0", "0", "0", "0"],
         ]
-        self.na_vrsti = random.choice(["igralec1", "igralec2"])
+        if na_vrsti:
+            self.na_vrsti = na_vrsti
+        else:
+            self.na_vrsti = random.choice(["igralec1", "igralec2"])
     
     def dodaj_potezo(self, igralec: str, stolpec: int):
         barva = None
@@ -30,7 +37,6 @@ class Polje():
 
         if vrstica != -1:
             self.mreza[vrstica][stolpec] = barva
-            self.seznam_potez.append((barva, vrstica, stolpec))
             if igralec == "igralec1":
                 self.na_vrsti = "igralec2"
             else:
@@ -44,17 +50,33 @@ class Polje():
     def preveri_zmago(self):
         konec, zmagovalec = ai_nasprotnik.konec_igre(self.mreza)
         return (konec, zmagovalec)
+
+    def v_slovar(self):
+        return {
+            "zaporedna_stevilka": self.zaporedna_stevilka,
+            "mreza": self.mreza,
+            "na_vrsti": self.na_vrsti
+        }
+
+    @staticmethod
+    def iz_slovarja(slovar):
+        return Polje(
+            slovar["zaporedna_stevilka"],
+            slovar["mreza"],
+            slovar["na_vrsti"]
+        )
+    
         
 class Statistika():
-    def __init__(self, igrane=0, izgubljene=0, zmagane=0, neodlocene=0):
+    def __init__(self, igrane=0, izgubljene=0, zmagane=0, neodlocene=0, seznam_koncanih=set()):
         self.stevilo_igranih_iger = igrane
         self.stevilo_izgubljenih_iger = izgubljene
         self.stevilo_zmaganih_iger = zmagane
         self.stevilo_neodlocenih_iger = neodlocene
-        self.seznam_hashov_koncanih_iger = set()
+        self.seznam_koncanih_iger = seznam_koncanih
 
     def dodaj_igro(self, zmagovalec, igra): # -1 poraz , 0 neodloćeno, 1 zmaga
-        self.seznam_hashov_koncanih_iger.add(igra)
+        self.seznam_koncanih_iger.add(igra)
         self.stevilo_igranih_iger += 1
         if zmagovalec == "R":
             self.stevilo_zmaganih_iger += 1
@@ -62,6 +84,25 @@ class Statistika():
             self.stevilo_izgubljenih_iger += 1
         else:
             self.stevilo_neodlocenih_iger += 1
+
+    def v_slovar(self):
+        return {
+            "stevilo_igranih_iger": self.stevilo_igranih_iger,
+            "stevilo_izgubljenih_iger": self.stevilo_izgubljenih_iger,
+            "stevilo_zmaganih_iger": self.stevilo_zmaganih_iger,
+            "stevilo_neodlocenih_iger": self.stevilo_neodlocenih_iger,
+            "seznam_koncanih": list(self.seznam_koncanih_iger)
+        }
+
+    @staticmethod
+    def iz_slovarja(slovar):
+        return Statistika(
+            slovar["stevilo_igranih_iger"],
+            slovar["stevilo_izgubljenih_iger"],
+            slovar["stevilo_zmaganih_iger"],
+            slovar["stevilo_neodlocenih_iger"],
+            set(slovar["seznam_koncanih"])
+        )
     
 
     def vrni_statistiko(self):
@@ -69,21 +110,52 @@ class Statistika():
         
 
 class Stanje():
-    def __init__(self, igrane=0, izgubljene=0, zmagane=0, neodlocene=0):
-        self.trenutno_polje_za_2 = Polje()
-        self.trenutno_polje_za_1 = Polje()
+    def __init__(self, stevilo_vseh_polj=2, polje1=Polje(0), polje2=Polje(1), statistika=Statistika()):
+        self.stevilo_vseh_polj = stevilo_vseh_polj
+        self.trenutno_polje_za_2 = polje2
+        self.trenutno_polje_za_1 = polje1
         self.trenutna_tema = 0
-        self.statistika = Statistika(igrane, izgubljene, zmagane, neodlocene)
+        self.statistika = statistika
 
     
     def novo_polje_za_2(self):
-        self.trenutno_polje_za_2 = Polje()
+        self.trenutno_polje_za_2 = Polje(self.stevilo_vseh_polj)
+        self.stevilo_vseh_polj += 1
     
     def novo_polje_za_1(self):
-        self.trenutno_polje_za_1 = Polje()
+        self.trenutno_polje_za_1 = Polje(self.stevilo_vseh_polj)
+        self.stevilo_vseh_polj += 1
 
     def zamenjaj_temo(self):
         self.trenutna_tema = (self.trenutna_tema + 1) % 2
+
+    def v_slovar(self):
+        return {
+            "stevilo_vseh_polj": self.stevilo_vseh_polj,
+            "polje_za_1": self.trenutno_polje_za_1.v_slovar(),
+            "polje_za_2": self.trenutno_polje_za_2.v_slovar(),
+            "statistika": self.statistika.v_slovar()
+        }
+
+    @staticmethod
+    def iz_slovarja(slovar):
+        return Stanje(
+            slovar["stevilo_vseh_polj"], 
+            Polje.iz_slovarja(slovar["polje_za_1"]),
+            Polje.iz_slovarja(slovar["polje_za_2"]),
+            Statistika.iz_slovarja(slovar["statistika"])
+        )
+
+    def shrani_v_datoteko(self, ime_datoteke):
+        with open(ime_datoteke, "w") as d:
+            slovar = self.v_slovar()
+            json.dump(slovar, d)
+
+    @staticmethod
+    def preberi_iz_datoteke(ime_datoteke):
+        with open(ime_datoteke) as d:
+            slovar = json.load(d)
+            return Stanje.iz_slovarja(slovar)
 
         
         

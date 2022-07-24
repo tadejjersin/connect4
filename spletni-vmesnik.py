@@ -1,7 +1,12 @@
 import bottle
 import model
 
-stanje = model.Stanje()
+IME_DATOTEKE = "stanje.json"
+stanje = model.Stanje.preberi_iz_datoteke(IME_DATOTEKE)
+print(stanje.trenutno_polje_za_1.mreza)
+
+def shrani_stanje():
+    stanje.shrani_v_datoteko(IME_DATOTEKE)
 
 @bottle.get("/")
 def zacetni_zaslon():
@@ -35,11 +40,13 @@ def vrzi_v_prvi_stolpec(id_stolpca):
     konec = stanje.trenutno_polje_za_2.preveri_zmago()[0]
     if not konec:
         stanje.trenutno_polje_za_2.dodaj_potezo(igralec, st)
+    shrani_stanje()
     bottle.redirect("/igra_za_dva")
 
 @bottle.post("/nova_igra/")
 def nova_igra2():
     stanje.novo_polje_za_2()
+    shrani_stanje()
     bottle.redirect("/igra_za_dva")
 
 @bottle.post("/nazaj_na_zacetno_stran/")
@@ -47,7 +54,7 @@ def nazaj_na_zacetno_stran():
     bottle.redirect("/")
 
 @bottle.get("/igra_za_enega")
-def igra_za_enega():
+def igra_za_enega(): 
     na_vrsti = stanje.trenutno_polje_za_1.na_vrsti
     konec, zmagovalec = stanje.trenutno_polje_za_1.preveri_zmago()
     if na_vrsti == "igralec2" and not konec:
@@ -56,11 +63,11 @@ def igra_za_enega():
     mreza = stanje.trenutno_polje_za_1.mreza
     na_vrsti = stanje.trenutno_polje_za_1.na_vrsti
     konec, zmagovalec = stanje.trenutno_polje_za_1.preveri_zmago()
-    koncane_igre = stanje.statistika.seznam_hashov_koncanih_iger
-    igra = hash(stanje.trenutno_polje_za_1)
+    koncane_igre = stanje.statistika.seznam_koncanih_iger
+    igra = stanje.trenutno_polje_za_1.zaporedna_stevilka
     if konec and igra not in koncane_igre:
         stanje.statistika.dodaj_igro(zmagovalec, igra)
-        
+    shrani_stanje()
     return bottle.template(
         "igra_za_enega.html", 
         na_vrsti = na_vrsti,
@@ -75,11 +82,13 @@ def vrzi_v_prvi_stolpec(id_stolpca):
     konec = stanje.trenutno_polje_za_1.preveri_zmago()[0]
     if not konec:
         stanje.trenutno_polje_za_1.dodaj_potezo("igralec1", st)
+    shrani_stanje()
     bottle.redirect("/igra_za_enega")
 
 @bottle.post("/nova_igra1/")
 def nova_igra1():
     stanje.novo_polje_za_1()
+    shrani_stanje()
     bottle.redirect("/igra_za_enega")
 
 @bottle.get("/statistika")
