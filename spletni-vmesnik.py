@@ -87,10 +87,9 @@ def igra1():
     stanje = stanje_trenutnega_uporabnika()
     return bottle.template(
         "igra_za_dva.html",
-        stanje=stanje,
         na_vrsti = stanje.trenutno_polje_za_2.na_vrsti,
         mreza = stanje.trenutno_polje_za_2.mreza,
-        konec = stanje.trenutno_polje_za_2.preveri_zmago()
+        konec = stanje.trenutno_polje_za_2.preveri_zmago()[0]
     )
 
 @bottle.post("/vrzi_v_stolpec/<id_stolpca:int>/")
