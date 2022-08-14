@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Registracija</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <h1>Registracija</h1>
+        <form action="/registracija/" method="POST">
+            <input name="uporabnisko_ime" type="text" placeholder="uporabniško ime">
+            % if napaka:
+                <p>{{ napaka }}</p>
+            % end
+            <input name="geslo" type="password" placeholder="geslo">
+            <button>Registriraj se</button>
+        </form>
+    </body>
+</html>

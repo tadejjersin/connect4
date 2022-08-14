@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Prijava</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <form action="/prijava/" method="POST">
+            <input name="uporabnisko_ime" type="text" placeholder="uporabniško ime">
+            % if napaka:
+                <p>{{ napaka }}</p>
+            % end
+            <input name="geslo" type="password" placeholder="geslo">
+            <button>Prijavi se</button>
+        </form>
+        <h2>Še nimaš računa?</h2>
+        <form action="/ustvari_racun/" method="POST">
+            <button>Ustvari račun</button>
+        </form>
+    </body>
+</html>

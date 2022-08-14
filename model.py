@@ -2,6 +2,8 @@ import ai_nasprotnik
 import random
 import math
 import json
+from typing import List
+from dataclasses import dataclass
 
 class Polje():
     def __init__(self, zaporedna_stevilka, mreza=None, na_vrsti=None):
@@ -146,6 +148,61 @@ class Stanje():
             Statistika.iz_slovarja(slovar["statistika"])
         )
 
+
+class Uporabnik():
+    def __init__(self, uporabnisko_ime, geslo, stanje):
+        self.uporabnisko_ime = uporabnisko_ime
+        self.zasifrirano_geslo = geslo
+        self.stanje = stanje
+
+    @staticmethod
+    def zasifriraj_geslo(geslo_v_cistopisu):
+        return "XXX" + geslo_v_cistopisu[::-1] + "XXX"
+
+    def ima_geslo(self, geslo_v_cistopisu):
+        print(self.zasifrirano_geslo, self.zasifriraj_geslo(geslo_v_cistopisu))
+        return self.zasifriraj_geslo(geslo_v_cistopisu) == self.zasifrirano_geslo
+
+    def nastavi_novo_geslo(self, geslo_v_cistopisu):
+        self.zasifrirano_geslo = self.zasifriraj_geslo(geslo_v_cistopisu)
+
+    def v_slovar(self):
+        return {
+            "uporabnisko_ime": self.uporabnisko_ime,
+            "zasifrirano_geslo": self.zasifrirano_geslo,
+            "stanje": self.stanje.v_slovar(),
+        }
+
+    @classmethod
+    def iz_slovarja(cls, slovar):
+        return cls(
+            slovar["uporabnisko_ime"],
+            slovar["zasifrirano_geslo"],
+            Stanje.iz_slovarja(slovar["stanje"])
+        )
+
+
+@dataclass
+class VseSkupaj():
+    uporabniki: List[Uporabnik]
+
+    def poisci_uporabnika(self, uporabnisko_ime, geslo_v_cistopisu=None):
+        for uporabnik in self.uporabniki:
+            if uporabnik.uporabnisko_ime == uporabnisko_ime:
+                if geslo_v_cistopisu is None or uporabnik.ima_geslo(geslo_v_cistopisu):
+                    return uporabnik
+
+    def v_slovar(self):
+        return {
+            "uporabniki": [uporabnik.v_slovar() for uporabnik in self.uporabniki],
+        }
+
+    @classmethod
+    def iz_slovarja(cls, slovar):
+        return cls(
+            uporabniki=[Uporabnik.iz_slovarja(sl) for sl in slovar["uporabniki"]]
+        )
+
     def shrani_v_datoteko(self, ime_datoteke):
         with open(ime_datoteke, "w") as d:
             slovar = self.v_slovar()
@@ -155,7 +212,15 @@ class Stanje():
     def preberi_iz_datoteke(ime_datoteke):
         with open(ime_datoteke) as d:
             slovar = json.load(d)
-            return Stanje.iz_slovarja(slovar)
+            return VseSkupaj.iz_slovarja(slovar)
 
-        
-        
+primer_stanja = Stanje()
+primer_vsega_skupaj = VseSkupaj(
+    uporabniki=[
+        Uporabnik(
+            "test",
+            "geslo",
+            primer_stanja,
+        )
+    ]
+)
