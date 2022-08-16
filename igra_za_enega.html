@@ -6,10 +6,17 @@
         <link href="/static/igra-style.css" rel="stylesheet">
     </head>
     <body>
-        <div class="split left"></div>
+        <div class="split left">
+            <table>
+                <tr><td>NAVODILA ZA IGRO</td></tr>
+                <tr><td>blablabla</td></tr>
+            </table>
+        </div>
         <div class="middle">
             <h1>IGRA PROTI RAČUNALNIKU</h1>
-            <h2>Na vrsti je {{ na_vrsti }}</h2>
+            % if konec:
+            <h2>{{ sporocilo }}</h2>
+            % end
             <div class="stolpci">
                 <form action="/vrzi_v_stolpec2/0/"  method="POST"><button style="width: 50px;">1</button></form>
                 <form action="/vrzi_v_stolpec2/1/"  method="POST"><button style="width: 50px;">2</button></form>
@@ -35,9 +42,6 @@
                 </tr>
                 % end
             </table>
-            % if konec:
-            <h2>KONEC</h2>
-            % end
         </div>
         <div class="split right">
             <form action="/nova_igra1/" method="POST">
