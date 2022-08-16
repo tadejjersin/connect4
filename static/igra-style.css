@@ -1,0 +1,44 @@
+
+h1 {
+    text-align: center;
+    font-size: 60px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+
+img {
+    padding: 0%;
+    margin: 0;
+    border: 0ch;
+}
+
+table {
+    margin: 0 auto;
+}
+
+
+.stolpci {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.split {
+    height: 100%;
+    width: 30%;
+    position: fixed;
+}
+.left {
+    left: 0;
+}
+.right {
+
+    right: 0;
+}
+.middle {
+    text-align: center;
+    left: 30%;
+    height: 100%;
+    width: 40%;
+    position: fixed;
+}

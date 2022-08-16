@@ -2,38 +2,34 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Igra za dva</title>
-        <style>
-            .stolpci {
-                display: flex;
-                flex-direction: row;
-            }
-        </style>
+        <title>Igra za enega</title>
+        <link href="/static/igra-style.css" rel="stylesheet">
     </head>
     <body>
         <div class="split left"></div>
         <div class="middle">
+            <h1>IGRA PROTI RAČUNALNIKU</h1>
             <h2>Na vrsti je {{ na_vrsti }}</h2>
             <div class="stolpci">
-            <form action="/vrzi_v_stolpec2/0/"  method="POST"><button style="width: 49px;">1</button></form>
-            <form action="/vrzi_v_stolpec2/1/"  method="POST"><button style="width:49px;">2</button></form>
-            <form action="/vrzi_v_stolpec2/2/"  method="POST"><button style="width: 49px;">3</button></form>
-            <form action="/vrzi_v_stolpec2/3/"  method="POST"><button style="width: 49px;">4</button></form>
-            <form action="/vrzi_v_stolpec2/4/"  method="POST"><button style="width: 49px;">5</button></form>
-            <form action="/vrzi_v_stolpec2/5/"  method="POST"><button style="width: 49px;">6</button></form>
-            <form action="/vrzi_v_stolpec2/6/"  method="POST"><button style="width: 49px;">7</button></form>
+                <form action="/vrzi_v_stolpec2/0/"  method="POST"><button style="width: 50px;">1</button></form>
+                <form action="/vrzi_v_stolpec2/1/"  method="POST"><button style="width: 50px;">2</button></form>
+                <form action="/vrzi_v_stolpec2/2/"  method="POST"><button style="width: 50px;">3</button></form>
+                <form action="/vrzi_v_stolpec2/3/"  method="POST"><button style="width: 50px;">4</button></form>
+                <form action="/vrzi_v_stolpec2/4/"  method="POST"><button style="width: 50px;">5</button></form>
+                <form action="/vrzi_v_stolpec2/5/"  method="POST"><button style="width: 50px;">6</button></form>
+                <form action="/vrzi_v_stolpec2/6/"  method="POST"><button style="width: 50px;">7</button></form>
             </div>
-            <table>
+            <table cellspacing="0" cellpadding="0">
                 % for vrstica in range(6):
                 <tr>
                 %   for stolpec in range(7):
                 %       polje = mreza[vrstica][stolpec] 
                 %       if polje == "0":
-                    <td><img src="/static/prazna-bela.png" width="45" height="45"></td>
+                    <td><img src="/static/prazna-bela.png" width="50" height="50"></td>
                 %       elif polje == "R":
-                    <td><img src="/static/rdeca.png" width="45" height="45"></td>
+                    <td><img src="/static/rdeca.png" width="50" height="50"></td>
                 %       elif polje == "M":
-                    <td><img src="/static/zelena.png" width="45" height="45"></td>
+                    <td><img src="/static/zelena.png" width="50" height="50"></td>
                 % end
                 % end
                 </tr>

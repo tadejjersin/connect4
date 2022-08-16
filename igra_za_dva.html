@@ -3,45 +3,47 @@
     <head>
         <meta charset="UTF-8">
         <title>Igra za dva</title>
-        <style>
-            .stolpci {
-                display: flex;
-                flex-direction: row;
-            }
-        </style>
+        <link href="/static/igra-style.css" rel="stylesheet">
     </head>
     <body>
-        <div class="split left"></div>
-        <div class="middle">
-            <h2>Na vrsti je {{ na_vrsti }}</h2>
-            <div class="stolpci">
-            <form action="/vrzi_v_stolpec/0/"  method="POST"><button style="width: 49px;">1</button></form>
-            <form action="/vrzi_v_stolpec/1/"  method="POST"><button style="width:49px;">2</button></form>
-            <form action="/vrzi_v_stolpec/2/"  method="POST"><button style="width: 49px;">3</button></form>
-            <form action="/vrzi_v_stolpec/3/"  method="POST"><button style="width: 49px;">4</button></form>
-            <form action="/vrzi_v_stolpec/4/"  method="POST"><button style="width: 49px;">5</button></form>
-            <form action="/vrzi_v_stolpec/5/"  method="POST"><button style="width: 49px;">6</button></form>
-            <form action="/vrzi_v_stolpec/6/"  method="POST"><button style="width: 49px;">7</button></form>
-            </div>
+        <div class="split left">
             <table>
+                <tr><td>NAVODILA ZA IGRO</td></tr>
+                <tr><td>blablabla</td></tr>
+            </table>
+        </div>
+        <div class="middle">
+            <h1>IGRA ZA DVA</h1>
+            % if not konec:
+                <h2>Na vrsti je {{ na_vrsti }}</h2>
+            % else:
+                <h2>Zmagal je {{ ni_na_vrsti }}!</h2>
+            % end
+            <div class="stolpci">
+            <form action="/vrzi_v_stolpec/0/"  method="POST"><button style="width: 50px;">1</button></form>
+            <form action="/vrzi_v_stolpec/1/"  method="POST"><button style="width: 50px;">2</button></form>
+            <form action="/vrzi_v_stolpec/2/"  method="POST"><button style="width: 50px;">3</button></form>
+            <form action="/vrzi_v_stolpec/3/"  method="POST"><button style="width: 50px;">4</button></form>
+            <form action="/vrzi_v_stolpec/4/"  method="POST"><button style="width: 50px;">5</button></form>
+            <form action="/vrzi_v_stolpec/5/"  method="POST"><button style="width: 50px;">6</button></form>
+            <form action="/vrzi_v_stolpec/6/"  method="POST"><button style="width: 50px;">7</button></form>
+            </div>
+            <table cellspacing="0" cellpadding="0">
                 % for vrstica in range(6):
                 <tr>
                 %   for stolpec in range(7):
                 %       polje = mreza[vrstica][stolpec] 
                 %       if polje == "0":
-                    <td><img src="/static/prazna-bela.png" width="45" height="45"></td>
+                    <td><img src="/static/prazna-bela.png" width="50" height="50"></td>
                 %       elif polje == "R":
-                    <td><img src="/static/rdeca.png" width="45" height="45"></td>
+                    <td><img src="/static/rdeca.png" width="50" height="50"></td>
                 %       elif polje == "M":
-                    <td><img src="/static/zelena.png" width="45" height="45"></td>
+                    <td><img src="/static/zelena.png" width="50" height="50"></td>
                 % end
                 % end
                 </tr>
                 % end
-            </table>
-            % if konec:
-            <h2>KONEC</h2>
-            % end
+            </table>            
         </div>
         <div class="split right">
             <form action="/nova_igra/" method="POST">
