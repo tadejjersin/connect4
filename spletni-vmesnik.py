@@ -68,19 +68,13 @@ def zacetni_zaslon():
     stanje = stanje_trenutnega_uporabnika()
     return bottle.template(
         "zacetni_zaslon.html",
-        stanje=stanje,
-        tema=stanje.trenutna_tema
+        stanje=stanje
         )
 
 @bottle.route("/static/<filepath:path>")
 def load_static(filepath):
     return bottle.static_file(filepath, root="./static")
 
-@bottle.post("/zamenjaj_temo/")
-def zamenjaj_temo():
-    stanje = stanje_trenutnega_uporabnika()
-    stanje.zamenjaj_temo()
-    bottle.redirect("/")
 
 @bottle.get("/igra_za_dva")
 def igra1():
@@ -137,10 +131,17 @@ def igra_za_enega():
     igra = stanje.trenutno_polje_za_1.zaporedna_stevilka
     if konec and igra not in koncane_igre:
         stanje.statistika.dodaj_igro(zmagovalec, igra)
+    if zmagovalec == "M":
+        sporocilo = "Izgubili ste!"
+    elif zmagovalec == "R":
+        sporocilo = "Zmagali ste!"
+    else:
+        sporocilo = "Neodločeno!"
     shrani_stanje()
     return bottle.template(
         "igra_za_enega.html", 
         na_vrsti = na_vrsti,
+        sporocilo = sporocilo,
         mreza = mreza,
         konec = konec
     )
