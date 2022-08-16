@@ -3,22 +3,25 @@
     <head>
         <title>Statistika</title>
         <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
     </head>
     <body>
-        <h2>
-            Število igranih iger : {{ st_igr }}
-        </h2>
-        <h2>
-            Število zmaganih iger : {{ st_zm }}
-        </h2>
-        <h2>
-            Število izgubljenih iger : {{ st_izg }}
-        </h2>
-        <h2>
-            Število neodločenih iger : {{ st_neod }}
-        </h2>
-        <form action="/nazaj_na_zacetno_stran/" method="POST">
-            <button>NAZAJ NA ZAČETNO STRAN</button>
-        </form>
+        <main class="container">
+            <h2>
+                Število igranih iger : {{ st_igr }}
+            </h2>
+            <h2>
+                Število zmaganih iger : {{ st_zm }}
+            </h2>
+            <h2>
+                Število izgubljenih iger : {{ st_izg }}
+            </h2>
+            <h2>
+                Število neodločenih iger : {{ st_neod }}
+            </h2>
+            <form action="/nazaj_na_zacetno_stran/" method="POST">
+                <button>NAZAJ NA ZAČETNO STRAN</button>
+            </form>
+        </main>
     </body>
 </html>
