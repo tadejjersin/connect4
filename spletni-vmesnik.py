@@ -85,9 +85,17 @@ def zamenjaj_temo():
 @bottle.get("/igra_za_dva")
 def igra1():
     stanje = stanje_trenutnega_uporabnika()
+    naslednji = stanje.trenutno_polje_za_2.na_vrsti
+    if naslednji == "igralec1":
+        na_vrsti = "rdeči igralec"
+        ni_na_vrsti = "zeleni igralec"
+    else:
+        na_vrsti = "zeleni igralec"
+        ni_na_vrsti = "rdeči igralec"
     return bottle.template(
         "igra_za_dva.html",
-        na_vrsti = stanje.trenutno_polje_za_2.na_vrsti,
+        na_vrsti = na_vrsti,
+        ni_na_vrsti = ni_na_vrsti,
         mreza = stanje.trenutno_polje_za_2.mreza,
         konec = stanje.trenutno_polje_za_2.preveri_zmago()[0]
     )
