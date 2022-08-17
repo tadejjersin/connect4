@@ -7,6 +7,7 @@
     </head>
     <body>
         <main class="container">
+            <h1>Prijava</h1>
             <form action="/prijava/" method="POST">
                 <input name="uporabnisko_ime" type="text" placeholder="uporabniško ime">
                 % if napaka:
@@ -15,7 +16,7 @@
                 <input name="geslo" type="password" placeholder="geslo">
                 <button>Prijavi se</button>
             </form>
-            <h2>Še nimaš računa?</h2>
+            <h3>Še nimaš računa?</h3>
             <form action="/ustvari_racun/" method="POST">
                 <button>Ustvari račun</button>
             </form>
