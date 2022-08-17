@@ -29,10 +29,11 @@ table {
     position: fixed;
 }
 .left {
+    padding: 200px 0;
     left: 0;
 }
 .right {
-
+    padding: 200px 0;
     right: 0;
 }
 .middle {
@@ -42,3 +43,12 @@ table {
     width: 40%;
     position: fixed;
 }
+
+
+.button {
+    font-size: 18px;
+    padding: 10px 24px;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 3px 10px 0 rgba(0,0,0,0.19);
+  }
+  
