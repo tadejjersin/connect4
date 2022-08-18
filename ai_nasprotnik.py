@@ -1,21 +1,21 @@
 import math
-
-def mozne_nove_mreze(mreza, igralec):
+# zdelo se mi je nehigienično pisati vso kodo v model.py 
+def mozne_nove_mreze(mreza, igralec): # mreza je seznam seznamov
     if igralec:
-        barva = "R"
+        barva = "R" #predstavlja rdečo barvo (žetone)
     else:
-        barva = "M"
+        barva = "M" #predstavlja zeleno barvo (žetone)
     
     mreze_s_stolpci = []
     for stolpec in range(7):
         if mreza[0][stolpec] not in ["R", "M"]:
             nova_mreza = [v[:] for v in mreza]
-            vrstica = [v[stolpec] for v in mreza].count("0") - 1
+            vrstica = [v[stolpec] for v in mreza].count("0") - 1 # 0 predstavlja prazna polja
             nova_mreza[vrstica][stolpec] = barva
             mreze_s_stolpci.append((stolpec, nova_mreza))
     return mreze_s_stolpci
 
-
+# preveri če je konec igre
 def konec_igre(mreza):
     if mreza[0].count("0") == 0: # če je prva vrstica polna je cela mreža polna
          return (True, None)
@@ -28,6 +28,7 @@ def konec_igre(mreza):
     else:
         return (False, None)
 
+# izračuna vrednost mreže
 def vrednost_mreze(mreza):
     vrednost = 0
     mozne_komb = mozne_kombinacije(mreza)
@@ -35,6 +36,7 @@ def vrednost_mreze(mreza):
         vrednost += doloci_vrednost_kombinacije(kombinacija)
     return vrednost
 
+# vrne vse možne kombinacije (nize dolžine 4)
 def mozne_kombinacije(mreza):
     kombinacije = []
     for vrstica in range(6): 
@@ -61,26 +63,27 @@ def mozne_kombinacije(mreza):
                         kombinacije.append(kombinacija)
     return kombinacije
 
+# ovrednoti posamezno kombinacijo
 def doloci_vrednost_kombinacije(kombinacija: str):
     stevilo_praznih = kombinacija.count("0")
     stevilo_rdecih = kombinacija.count("R")
-    stevilo_modrih = kombinacija.count("M")
+    stevilo_zelenih = kombinacija.count("M")
     if stevilo_praznih in [4, 3]:
         return 0
     elif stevilo_praznih == 2:
-        if stevilo_modrih == 2:
-            return -3
+        if stevilo_zelenih == 2: 
+            return -3 # neke vredosti, ki so se mi zdele primerne
         else:
             return 0
     elif stevilo_praznih == 1:
-        if stevilo_modrih == 3:
+        if stevilo_zelenih == 3:
             return -10
         elif stevilo_rdecih == 3:
             return 7
         else:
             return 0
     else:
-        if stevilo_modrih == 4:
+        if stevilo_zelenih == 4:
             return -1000000
         elif stevilo_rdecih == 4:
             return 1000000
