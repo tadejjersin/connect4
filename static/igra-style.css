@@ -1,3 +1,6 @@
+body {
+    background-color: #F5F5F5;
+}
 
 h1 {
     text-align: center;
@@ -16,6 +19,20 @@ table {
     margin: 0 auto;
 }
 
+#tabela_navodil {
+    border: solid 3px #212121;
+    width: 75%;
+    background-color: #9E9E9E;
+}
+
+#naslov_tabele {
+    font-size: 22px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+#besedilo_tabele {
+    font-size: 18px;
+}
 
 .stolpci {
     display: flex;
