@@ -1,8 +1,7 @@
 import bottle
 import model
 
-with open("skrivnost.txt") as f:
-    SKRIVNOST = f.read()
+SKRIVNOST = "krompir"
 vse_skupaj = model.VseSkupaj.preberi_iz_datoteke("stanje.json")
 
 
