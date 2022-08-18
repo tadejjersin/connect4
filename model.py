@@ -218,7 +218,7 @@ primer_vsega_skupaj = VseSkupaj(
     uporabniki=[
         Uporabnik(
             "test",
-            "geslo",
+            Uporabnik.zasifriraj_geslo("geslo"),
             primer_stanja,
         )
     ]
